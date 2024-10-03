@@ -1,0 +1,19 @@
+{
+  "name": "fullstack-proje",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon --ignore '*.json'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Furkan Cingoz",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "flatted": "^3.3.1",
+    "nodemon": "^3.1.7",
+    "uuid": "^10.0.0"
+  }
+}
