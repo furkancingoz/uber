@@ -40,15 +40,14 @@ class BaseDatabase {
     this.save(objects)
   }
 
-  update(object) {
-    const objects = this.load()
-
-    const index = objects.findIndex(o => o.id == object.id)
-
-    if (index == -1) throw new Error(`Cannot find ${this.model.name} instance with id ${object.id}`)
-
-    objects.splice(index, 1, object)
-    this.save(objects)
+  async update(object) {
+    const objects = await this.load();  // 'await' ekleyin, çünkü load asenkron
+    const index = objects.findIndex(o => o.id === object.id);
+  
+    if (index === -1) throw new Error(`Cannot find ${this.model.name} instance with id ${object.id}`);
+  
+    objects.splice(index, 1, object);
+    await this.save(objects);  // Asenkron save işlemi için de await ekleyin
   }
 
   async find(id) {
