@@ -2,10 +2,10 @@ const BaseDatabase = require('./base-database')
 const Passenger = require('../models/passenger')
 
 class PassengerDatabase extends BaseDatabase {
-  findByName(name) {
-    const objects = this.load()
+  async findByName(name) {
+    const objects = await this.load(); // Await ile diziyi bekleyin
 
-    return objects.find(o => o.name == name)
+    return objects.find(o => o.name === name); // Burada artık dizi üzerinden find çalıştırabilirsiniz
   }
 }
 

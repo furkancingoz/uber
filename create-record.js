@@ -15,13 +15,20 @@ armagan.book(stefan, 'Mitte', 'Kreuzberg')
 armagan.book(stefan, 'Kreuzberg', 'SXF')
 mert.book(stefan, 'Mitte', 'Kreuzberg')
 
-passengerDatabase.save([armagan, mert])
-driverDatabase.save([stefan])
+async function main() {
+  try {
+    await passengerDatabase.save([armagan, mert])
 
-const betul = Passenger.create({name: 'Betul', location: 'Tegel'})
+    await driverDatabase.save([stefan])
 
-passengerDatabase.insert(betul)
+    const betul = Passenger.create({ name: 'Betul', location: 'Tegel' })
 
-const passengers = passengerDatabase.load()
+    await passengerDatabase.insert(betul)
+    const passengers = await passengerDatabase.load()
+    passengers.forEach(printBookingHistory)
+  } catch (e) {
+    return console.log(e)
+  }
+}
 
-passengers.forEach(printBookingHistory)
+main()
