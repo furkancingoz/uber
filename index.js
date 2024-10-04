@@ -1,16 +1,18 @@
-const { passengerDatabase, driverDatabase } = require('./database')
-const printBookingHistory = require('./lib/print-booking-history')
+const express = require('express')
+const { passengerDatabase } = require('./database')
+const flatted = require('flatted')
 
-async function main(){
-    const stefan = await driverDatabase.findBy('name', 'Stefan')
-    const armagan = await passengerDatabase.findByName('Armagan')
-    
-    armagan.book(stefan, 'Kreuzberg', 'Wannsee')
-    console.log(armagan)
-    await passengerDatabase.update(armagan)
-    
-    printBookingHistory(armagan)
-    
-    console.log(await passengerDatabase.findBy('location', 'Mitte'))
-}
-main()
+const app = express()
+
+app.get('/passengers', async (req, res) => {
+    const passengers = await passengerDatabase.load()
+    res.send(flatted.stringify(passengers))
+})
+
+app.get('/', (req, res) => {
+    res.send('homepage')
+})
+
+app.listen(3000, () => {
+    console.log('started listening 3000')
+})
