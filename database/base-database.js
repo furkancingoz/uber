@@ -27,7 +27,7 @@ class BaseDatabase {
       })
     })
   }
-  
+
   async insert(object) {
     const objects = await this.load()
 
@@ -46,14 +46,24 @@ class BaseDatabase {
     this.save(objects)
   }
 
+  async removeBy(property, value) {
+    const objects = await this.load()
+
+    const index = objects.findIndex(o => o[property] == value)
+
+
+    objects.splice(index, 1)
+    await this.save(objects)
+  }
+
   async update(object) {
-    const objects = await this.load();  // 'await' ekleyin, çünkü load asenkron
-    const index = objects.findIndex(o => o.id === object.id);
-  
-    if (index === -1) throw new Error(`Cannot find ${this.model.name} instance with id ${object.id}`);
-  
-    objects.splice(index, 1, object);
-    await this.save(objects);  // Asenkron save işlemi için de await ekleyin
+    const objects = await this.load()
+    const index = objects.findIndex(o => o.id === object.id)
+
+    if (index === -1) throw new Error(`Cannot find ${this.model.name} instance with id ${object.id}`)
+
+    objects.splice(index, 1, object)
+    await this.save(objects) 
   }
 
   async find(id) {

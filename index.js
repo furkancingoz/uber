@@ -23,6 +23,12 @@ app.post('/passengers', async (req, res) => {
 })
 
 
+app.delete('/passengers/:passengerId', async (req, res) => {
+await passengerDatabase.removeBy('id', (req.params.passengerId))
+
+res.send('OK')
+})
+
 app.get('/passengers/:passengerId', async (req, res) => {
     const passenger = await passengerDatabase.find(req.params.passengerId)
     if (!passenger) return res.status(404).send('Cannot find passengers')
