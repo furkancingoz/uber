@@ -31,7 +31,7 @@ class BaseDatabase {
   async insert(object) {
     const objects = await this.load()
 
-    if (!(object instanceof this.mode)) {
+    if (!(object instanceof this.model)) {
       object = this.model.create(object)
     }
     await this.save(objects.concat(object))
